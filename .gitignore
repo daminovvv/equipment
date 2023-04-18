@@ -6,3 +6,9 @@ __pycache__/
 # .idea
 .idea/
 .idea/.gitignore
+
+# Environments
+.env
+.venv
+env/
+venv/
