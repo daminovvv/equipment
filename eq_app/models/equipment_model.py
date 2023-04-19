@@ -9,5 +9,6 @@ class Equipment(models.Model):
     deleted = models.BooleanField(default=False)
 
     def delete(self):
+        """Soft delete. The data is still stored in database"""
         self.deleted = True
         self.save()

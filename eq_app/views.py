@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from rest_framework import mixins, viewsets, status, generics
+from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
 from eq_app.models import EquipmentType, Equipment
@@ -12,11 +11,13 @@ class EquipmentViewSet(mixins.ListModelMixin,
                        mixins.UpdateModelMixin,
                        mixins.DestroyModelMixin,
                        viewsets.GenericViewSet):
+    """Viewset for api/equipment and api/equipment/<id>"""
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
     lookup_field = 'id'
 
     def get_queryset(self):
+        """Filters and returns queryset for serializer"""
         params = {'deleted': False, 'limit': None, 'offset': None}
         if self.action == "list":
             params.update(self.request.query_params.dict())
@@ -25,6 +26,7 @@ class EquipmentViewSet(mixins.ListModelMixin,
         return Equipment.objects.filter(**params)
 
     def create(self, request, *args, **kwargs):
+        """Creates records in the database"""
         if isinstance(request.data, list):
             serializer = self.get_serializer(data=request.data, many=True)
         else:
@@ -37,9 +39,11 @@ class EquipmentViewSet(mixins.ListModelMixin,
 
 class EquipmentTypeView(mixins.ListModelMixin,
                         viewsets.GenericViewSet):
+    """View for api/equipment-type"""
     serializer_class = EquipmentTypeSerializer
 
     def get_queryset(self):
+        """Filters and returns queryset for serializer"""
         params = {'limit': None, 'offset': None}
         if self.action == "list":
             params.update(self.request.query_params.dict())
