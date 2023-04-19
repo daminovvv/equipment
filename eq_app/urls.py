@@ -1,12 +1,7 @@
 from django.urls import path
-
+from rest_framework import routers
 from eq_app.views import EquipmentView
 
-urlpatterns = [
-    path('equipment/<int:id>/', EquipmentView.as_view(
-        {'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}
-    )),
-    path('equipment/', EquipmentView.as_view(
-        {'get': 'list', 'post': 'create'}
-    )),
-]
+router = routers.SimpleRouter()
+router.register(r'equipment', EquipmentView)
+urlpatterns = router.urls

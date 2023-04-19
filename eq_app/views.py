@@ -12,18 +12,16 @@ class EquipmentView(mixins.ListModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin,
                     viewsets.GenericViewSet):
+    queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
     lookup_field = 'id'
 
     def get_queryset(self):
-        params = {}
+        params = {'deleted': False, 'limit': None, 'offset': None}
         if self.action == "list":
-            params = self.request.query_params.dict()
-            try:
-                del params['offset']
-            except KeyError:
-                pass
-        params['deleted'] = False
+            params.update(self.request.query_params.dict())
+        del params['limit']
+        del params['offset']
         return Equipment.objects.filter(**params)
 
     def create(self, request, *args, **kwargs):
