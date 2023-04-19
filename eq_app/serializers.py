@@ -19,13 +19,16 @@ class EquipmentSerializer(serializers.ModelSerializer):
             "X": "([A-Z]|[0-9])",
             "Z": "(-|_|@)"
         }
-        sn_pattern = re.compile(r"^{}$".format(''.join(translate[letter] for letter in related_data)))
+        sn_pattern = re.compile(r"^{}$".format(
+            ''.join(translate[letter] for letter in related_data))
+        )
 
         regex_validator = RegexValidator(
             regex=sn_pattern,
-            message=f"Serial number does not match following mask of equipment type: {related_data}, "
-                    f"where N - number, A - uppercase letter, a - lowercase letter, "
-                    f"X - number or uppercase letter, Z - symbol from the list -,_,@",
+            message=f"Serial number does not match following mask of equipment type: "
+                    f"{related_data}, where N - number, A - uppercase letter, "
+                    f"a - lowercase letter, X - number or uppercase letter, "
+                    f"Z - symbol from the list -,_,@",
         )
 
         regex_validator(data['sn'])
