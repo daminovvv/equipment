@@ -11,7 +11,7 @@ class EquipmentViewSet(mixins.ListModelMixin,
                        mixins.UpdateModelMixin,
                        mixins.DestroyModelMixin,
                        viewsets.GenericViewSet):
-    """Viewset for api/equipment and api/equipment/<id>"""
+    """Allows to work with equipment"""
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
     lookup_field = 'id'
@@ -39,7 +39,7 @@ class EquipmentViewSet(mixins.ListModelMixin,
 
 class EquipmentTypeView(mixins.ListModelMixin,
                         viewsets.GenericViewSet):
-    """View for api/equipment-type"""
+    """Allows to work with equipment type"""
     serializer_class = EquipmentTypeSerializer
 
     def get_queryset(self):
