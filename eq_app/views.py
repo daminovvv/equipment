@@ -8,14 +8,22 @@ from eq_app.serializers import EquipmentSerializer
 
 class EquipmentView(mixins.ListModelMixin,
                     mixins.CreateModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
                     viewsets.GenericViewSet):
-
     serializer_class = EquipmentSerializer
+    lookup_field = 'id'
 
     def get_queryset(self):
         params = {}
         if self.action == "list":
             params = self.request.query_params.dict()
+            try:
+                del params['offset']
+            except KeyError:
+                pass
+        params['deleted'] = False
         return Equipment.objects.filter(**params)
 
     def create(self, request, *args, **kwargs):
