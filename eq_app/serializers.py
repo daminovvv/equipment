@@ -6,3 +6,9 @@ class EquipmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Equipment
         exclude = ['deleted']
+
+
+class EquipmentTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EquipmentType
+        fields = '__all__'
