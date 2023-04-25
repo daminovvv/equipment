@@ -1,4 +1,4 @@
-from rest_framework import mixins, viewsets, status
+from rest_framework import mixins, viewsets, status, permissions
 from rest_framework.response import Response
 
 from eq_app.models import EquipmentType, Equipment
@@ -15,6 +15,7 @@ class EquipmentViewSet(mixins.ListModelMixin,
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
     lookup_field = 'id'
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         """Filters and returns queryset for serializer"""
@@ -43,6 +44,7 @@ class EquipmentTypeView(mixins.ListModelMixin,
                         viewsets.GenericViewSet):
     """Allows to work with equipment type"""
     serializer_class = EquipmentTypeSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         """Filters and returns queryset for serializer"""
