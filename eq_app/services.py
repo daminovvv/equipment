@@ -28,6 +28,7 @@ def validate_sn(sn, mask_sn):
 
 
 def process_query_params(view, soft_delete=False):
+    """Processes query parameters for filtering objects"""
     params = {"limit": None, "offset": None}
     if soft_delete is True:
         params["deleted"] = False
